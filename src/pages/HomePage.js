@@ -44,6 +44,28 @@ const HomePage = () => {
     }
   };
 
+  const deleteEmployee = async (req, res) => {
+    try {
+      const getPeople = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/deleteUser`,
+       
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Employee deleted successfully",
+      
+      })
+    }  catch (error) {
+      console.error(error)
+      return res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: error.message,
+      })
+    }
+  };
+  
   useEffect(() => {
     getAllData();
   },[]);
@@ -98,6 +120,13 @@ const HomePage = () => {
                       >
                         Role
                       </th>
+
+                          <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        update
+                      </th>
                     </tr>
                   </thead>
 
@@ -134,6 +163,11 @@ const HomePage = () => {
 
                         <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                           {person.role}
+                        </td>
+
+                                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                          <button className="bg-red text-white w-[2%] h-[3%]" onClick={deleteEmployee()}>delete</button>
+                          
                         </td>
                       </tr>
                     ))}
